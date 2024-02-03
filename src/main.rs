@@ -34,6 +34,8 @@ impl PartialEq for Item {
 }
 
 fn main() {
+    
+    //define items
     let sword = Item {
         name: String::from("sword"),
         damage: 5,
@@ -45,6 +47,7 @@ fn main() {
         heal: 5,
     };
 
+    //define players
     let mut warior1 = Entity {
         name: String::from("player1"),
         health: 20,
@@ -53,7 +56,6 @@ fn main() {
         inventory: [Some(&sword), None, None, None, None],
         hand: None,
     };
-
     let mut warior2 = Entity {
         name: String::from("player2"),
         health: 20,
@@ -63,9 +65,11 @@ fn main() {
         hand: None,
     };
 
+    //give em some items
     warior1.set_in_hand(&sword);
     warior2.set_in_hand(&potion);
 
+    //play tha game
     let mut move_counter: u64 = 0;
     while warior1.health > 0 && warior2.health > 0 {
         move_counter += 1;
@@ -83,6 +87,7 @@ fn main() {
 }
 
 fn do_move(player1: &mut Entity, player2: &mut Entity) {
+    //calculate
     let mut dmg_amount = player1.strength / player2.armor;
     let mut heal_amount = 1;
 
@@ -94,9 +99,11 @@ fn do_move(player1: &mut Entity, player2: &mut Entity) {
         None => (),
     }
 
+    //apply
     player2.recieve_damage(dmg_amount);
     player1.recieve_damage(-heal_amount);
 
+    //log
     println!(
         "{} -> {}: {} dmg",
         player1.name,
